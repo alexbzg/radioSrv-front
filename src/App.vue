@@ -1,13 +1,18 @@
 <template>
   <div id="app">
-    <EncodersView :encoders="encoders"/>
+    Server {{serverConnected ? 'connected' : 'not connected'}} <br/>
+    Controller {{controllerConnected ? 'connected' : 'not connected'}}<br/>
+    <EncoderView :encoders="encoders"/>
+    <EncoderView :encoders="encoders"/>
     <input type="button" :value="showSetup ? 'Закрыть' : 'Настройки'" @click="showSetup = !showSetup"/>
     <EncodersSetup :encoders="encoders" v-if="showSetup"/>
   </div>
 </template>
 
 <script>
-import EncodersView from './components/EncodersView.vue'
+import './style.css'
+
+import EncoderView from './components/EncoderView.vue'
 import EncodersSetup from './components/EncodersSetup.vue'
 
 import encoders from './encoders'
@@ -15,7 +20,7 @@ import encoders from './encoders'
 export default {
     name: 'app',
     components: {
-        EncodersView,
+        EncoderView,
         EncodersSetup
     },
     data () {
@@ -23,17 +28,17 @@ export default {
             encoders: encoders,
             showSetup: false
         }
+    },
+    computed: {
+        controllerConnected () {
+            return this.encoders.wsc.controllerConnected
+        },
+        serverConnected () {
+            return this.encoders.wsc.serverConnected
+        }
     }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

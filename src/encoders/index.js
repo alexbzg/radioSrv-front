@@ -6,6 +6,7 @@ import encodersSettingsService from '../encoders-settings-service'
 const e = {
     wsc: wscEncoders,
     settings: {},
+    values: wscEncoders.encoders,
     loadSettings: encodersSettingsService.load
 }
 

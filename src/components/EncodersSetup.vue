@@ -7,7 +7,7 @@
             <th class="north">Север</th>
             <th class="buttons"></th>
         </tr>
-        <tr v-for="(enc, id) in this.encoders.settings" :key="id">
+        <tr v-for="(enc, id) in settings" :key="id">
             <td class="id">
                 {{id}}
             </td>
@@ -15,7 +15,7 @@
                 <input type="text" v-model="enc.name"/>
             </td>
             <td class="current">
-                {{encoders.wsc.encoders[id]}}
+                {{encoders.values[id]}}
             </td>
             <td>
                 <input type="text" v-model="enc.north"/>
@@ -42,21 +42,22 @@ export default {
     props: ['encoders'],
     data () {
         return {
-            newID: null
+            newID: null,
+            settings: this.loadSettings()
         }
     },
     methods: {
+        loadSettings () {
+            return JSON.parse( JSON.stringify( this.encoders.settings ) )
+        },
         post ( data ) {
             request.post( 'encSettings', data )
-                .then( function ( r ) {
-                    console.log( r.data )
-                })
                 .catch( function () {
                     alert( 'Ошибка сервера!' )
                 })
         },
         save (id) {
-            this.post( this.encoders.settings[id] )
+            this.post( this.settings[id] )
         },
         remove (id) {
             if (window.confirm('Вы действительно хотите удалить настройки энкодера?')) {
@@ -66,6 +67,11 @@ export default {
         },
         add () {
             this.post( { 'id': this.newID } )
+        }
+    },
+    watch: {
+        'encoders.settings': function () {
+            this.settings = this.loadSettings()
         }
     }
 }
