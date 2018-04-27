@@ -1,0 +1,42 @@
+body, html{
+    margin:0;
+    padding:0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #333;
+    background-color: #eee;
+    text-align: center;
+    position: relative;
+}
+input, button, textarea, select{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    padding: 5px;
+    margin: 5px 0;
+}
+.encoders_view{
+    width: 300px;
+    padding: 20px;
+    display: inline-block;
+}
+.map{
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #ccc;
+    background: #fff url("/static/images/map.jpg") top left;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.2); /* Параметры тени */
+}
+.arrow{
+    position: absolute;
+    top:0;
+    left: 0;
+}
+table.encoders_setup{
+    width: 800px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.2); /* Параметры тени */
+}

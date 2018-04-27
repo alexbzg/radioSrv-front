@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    Server {{serverConnected ? 'connected' : 'not connected'}} <br/>
-    Controller {{controllerConnected ? 'connected' : 'not connected'}}<br/>
     <EncoderView :encoders="encoders"/>
-    <EncoderView :encoders="encoders"/>
+    <EncoderView :encoders="encoders"/><br/>
+    Server {{serverConnected ? 'connected' : 'not connected'}} &nbsp; Controller {{controllerConnected ? 'connected' : 'not connected'}}<br/>
     <input type="button" :value="showSetup ? 'Закрыть' : 'Настройки'" @click="showSetup = !showSetup"/>
     <EncodersSetup :encoders="encoders" v-if="showSetup"/>
   </div>
