@@ -30,7 +30,6 @@ export default {
     },
 
     post (URL, data) {
-    //    data = { 'b': 'blah' }
         return axios.post(API_URL + URL, data)
             .catch(this.onError)
     },

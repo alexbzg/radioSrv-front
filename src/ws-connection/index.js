@@ -1,6 +1,21 @@
 export default function (url) {
     const wsc = this
-    this.url = url
+    if ( url.startsWith('ws') ) {
+        this.url = url
+    } else {
+        const loc = window.location
+        if (loc.protocol === 'https:') {
+            this.url = 'wss:'
+        } else {
+            this.url = 'ws:'
+        }
+        this.url += '//' + loc.host
+        if (!url.startsWith( '/' )) {
+            this.url += loc.pathname
+        }
+        this.url += url
+    }
+
     const listeners = { 'open': [], 'close': [], 'message': [] }
 
     this.addEventListener = addEventListener

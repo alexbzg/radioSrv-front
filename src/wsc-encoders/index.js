@@ -1,7 +1,7 @@
 import WSConnection from '../ws-connection'
 import Vue from 'vue'
 
-const wsc = new WSConnection('ws://192.168.1.25/aiohttp/ws/encoders')
+const wsc = new WSConnection('/aiohttp/ws/encoders')
 wsc.addEventListener( 'open', onConnect )
 wsc.addEventListener( 'close', onDisconnect )
 wsc.addEventListener( 'message', onMessage )

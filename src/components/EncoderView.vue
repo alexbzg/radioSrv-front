@@ -7,7 +7,7 @@
         </div>
         <select v-model="encoderID">
             <option disabled value="">Выберите энкодер</option>
-            <option v-for="(enc, id) in encoders.settings" :value="id" :key="id">
+            <option v-for="(enc, id) in encoders.settings.encoders" :value="id" :key="id">
                 {{id + (enc.name ? ': ' + enc.name : '')}}
             </option>
         </select>
@@ -31,12 +31,12 @@ export default {
             if (this.encoderID === '') {
                 return ''
             }
-            if (!this.encoders.settings[this.encoderID].north ||
-                    this.encoders.values[this.encoderID] === -1) {
-                return this.encoders.values[this.encoderID]
+            const north = this.encoders.settings.encoders[this.encoderID].north
+            const value = this.encoders.values[this.encoderID]
+            if (!north || value === -1) {
+                return value
             }
-            let angle = ( this.encoders.values[this.encoderID] -
-                    this.encoders.settings[this.encoderID].north ) / ( 1024 / 360 )
+            let angle = ( value - north ) / ( 1024 / 360 )
             if (angle < 0) {
                 angle += 360
             }

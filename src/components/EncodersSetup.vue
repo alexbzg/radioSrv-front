@@ -7,7 +7,7 @@
             <th class="north">Север</th>
             <th class="buttons"></th>
         </tr>
-        <tr v-for="(enc, id) in settings" :key="id">
+        <tr v-for="(enc, id) in settings.encoders" :key="id">
             <td class="id">
                 {{id}}
             </td>
@@ -29,6 +29,12 @@
             <td class="id" colspan="5">
                 Новый ID <input type="text" v-model="newID"/>
                 <button @click="add()">Добавить</button>
+            </td>
+        </tr>
+        <tr class="new">
+            <td class="id" colspan="5">
+                Контроллер <input type="text" v-model="settings.controller.host"/>
+                <button @click="setControllerHost()">Сохранить</button>
             </td>
         </tr>
     </table>
@@ -57,7 +63,7 @@ export default {
                 })
         },
         save (id) {
-            this.post( this.settings[id] )
+            this.post( this.settings.encoders[id] )
         },
         remove (id) {
             if (window.confirm('Вы действительно хотите удалить настройки энкодера?')) {
@@ -67,6 +73,9 @@ export default {
         },
         add () {
             this.post( { 'id': this.newID } )
+        },
+        setControllerHost () {
+            this.post( { 'controller': this.settings.controller } )
         }
     },
     watch: {
