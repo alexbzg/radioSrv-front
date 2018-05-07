@@ -21,6 +21,7 @@ encodersSettingsService.onUpdate(
         for (const x in data.controller) {
             Vue.set( e.settings.controller, x, data.controller[x] )
         }
+        Vue.set( e.settings, 'encoders', {} )
         data.encoders.forEach(
             x => Vue.set( e.settings.encoders, x.id, x )
         )

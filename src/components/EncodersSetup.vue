@@ -79,8 +79,11 @@ export default {
         }
     },
     watch: {
-        'encoders.settings': function () {
-            this.settings = this.loadSettings()
+        'encoders.settings': {
+            handler: function () {
+                this.settings = this.loadSettings()
+            },
+            deep: true
         }
     }
 }
