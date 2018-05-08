@@ -34,7 +34,7 @@ export default {
             const north = this.encoders.settings.encoders[this.encoderID].north
             const value = this.encoders.values[this.encoderID]
             if (!north || value === -1) {
-                return value
+                return -1
             }
             let angle = ( value - north ) / ( 1024 / 360 )
             if (angle < 0) {

@@ -15,6 +15,9 @@ export default function (url) {
         }
         this.url += url
     }
+    this.timeout = 500
+    let pingTimeoutID = null
+    let answerTimeoutID = null
 
     const listeners = { 'open': [], 'close': [], 'message': [] }
 
@@ -28,7 +31,26 @@ export default function (url) {
         for ( const type in listeners ) {
             listeners[type].forEach( cb => wsc.ws.addEventListener( type, cb ) )
         }
+        wsc.ws.onmessage = onMessage
         wsc.ws.onclose = onDisconnect
+        schedulePing()
+    }
+
+    function schedulePing () {
+        pingTimeoutID = setTimeout( ping, wsc.timeout )
+    }
+
+    function ping () {
+        wsc.ws.send( '__ping__' )
+        answerTimeoutID = setTimeout(
+            function () { wsc.ws.close() },
+            wsc.timeout
+        )
+    }
+
+    function onMessage () {
+        clearTimeouts()
+        schedulePing()
     }
 
     function addEventListener ( type, cb ) {
@@ -41,7 +63,18 @@ export default function (url) {
     function removeEventListener () {
     }
 
+    function clearTimeouts () {
+        if ( answerTimeoutID ) {
+            clearTimeout( answerTimeoutID )
+            answerTimeoutID = null
+        }
+        if ( pingTimeoutID ) {
+            clearTimeout( pingTimeoutID )
+        }
+    }
+
     function onDisconnect () {
+        clearTimeouts()
         wsc.ws = null
         setTimeout( connect, 5000 )
     }

@@ -30,6 +30,9 @@ function onDisconnect () {
 }
 
 function onMessage (evt) {
+    if (evt.data === '__pong__') {
+        return
+    }
     const data = JSON.parse( evt.data )
     if ('controllerConnection' in data) {
         e.controllerConnected = data.controllerConnection
